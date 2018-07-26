@@ -1,10 +1,10 @@
 import React from 'react'
-let DropDownButton = require("react-bootstrap/DropDownButton")
-import SongItem from'./SongItem'
+import SongItem from './SongItem'
+import {DropdownButton} from "react-bootstrap"
 let SongFormatterMixin = require("./../mixins/SongFormatterMixin")
 
-class SongList extends Component {
-  mixins: [SongFormatterMixin],
+class SongList extends React.Component {
+  mixins: [SongFormatterMixin]
 
   render = () => {
     let songs = []
@@ -15,7 +15,7 @@ class SongList extends Component {
 
     songs = this.props.songs.map(function(song, index){
       let songName = this.getSongName(song)
-      let songName = songCount > 1 ? (index + 1) + ". " + songName : songName
+      songName = songCount > 1 ? (index + 1) + ". " + songName : songName
 
       return <SongItem currentSongIndex={currentSongIndex}
               eventKey={index} 
@@ -27,13 +27,13 @@ class SongList extends Component {
 
     return (
       <div className="audio-songs-list">
-        <DropDownButton ref="DropDownButton">{songs}</DropDownButton>
+        <DropdownButton ref="DropdownButton">{songs}</DropdownButton>
       </div>
       ) 
   }
 
   hideDropdownMenu = () => {
-    this.refs.DropDownButton.setDropdownState(false)
+    this.refs.DropdownButton.setDropdownState(false)
   }
 } 
 

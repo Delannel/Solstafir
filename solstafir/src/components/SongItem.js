@@ -1,9 +1,8 @@
 import React from 'react'
-let classnames = require("classnames")
-let MenuItem = require ('react-bootstrap/MenuItem')
-let Glyphicon = require('react-bootstrap/Glyphicon')
+import classnames from "classnames"
+import {MenuItem, Glyphicon} from 'react-bootstrap'
 
-class SongItem extends Component {
+class SongItem extends React.Component {
   render = () => {
     let currentSongIndex = this.props.currentSongIndex
     let isSelected= this.props.currentSongIndex == this.props.eventKey
@@ -20,7 +19,7 @@ class SongItem extends Component {
     components[1] = <span className="audio-song-item-label" >{this.props.name}</span>
 
     let classes = classnames({
-      'audio-song-item: true',
+      'audio-song-item': true,
       'active': isSelected,
     })
 

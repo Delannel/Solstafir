@@ -1,8 +1,8 @@
 import React from 'react'
 let TimeFormatterMixin = require('./../mixins/TimeFormatterMixin')
 
-class TimeLabel extends Component {
-  mixins: [TimeFormatterMixine],
+class TimeLabel extends React.Component {
+  mixins: [TimeFormatterMixine]
 
   render = () => {
     let classes = "audio-time pull-right"

@@ -1,18 +1,16 @@
-var React = require('react/addons');
-var Button = require('react-bootstrap/Button');
-var Glyphicon = require('react-bootstrap/Glyphicon');
-var ButtonGroup = require('react-bootstrap/ButtonGroup');
+import React from 'react'
+import {Glyphicon, ButtonGroup, Button} from 'react-bootstrap'
 
-module.exports = React.createClass({
+class ButtonPanel extends React.Component {
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       currentSongIndex: 0,
       songCount: 0
     };
-  },
+  }
 
-  render: function() {
+  render () {
 
     var isPlaying = this.props.isPlaying;
     var isPause = this.props.isPause;
@@ -56,7 +54,9 @@ module.exports = React.createClass({
             <Glyphicon glyph="step-forward" />
           </Button>
         </ButtonGroup>
-      );
+      )
     }
   }
-});
+}
+
+export default ButtonPanel

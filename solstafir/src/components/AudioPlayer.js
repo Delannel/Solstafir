@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import $ from 'jquery'
 import ButtonPanel from './ButtonPanel'
 import ProgressBar from './ProgressBar'
 import VolumeBar from './VolumeBar'
@@ -6,23 +7,21 @@ import TimeLabel from './TimeLabel'
 import NameLabel from './NameLabel'
 import SongList from './SongList'
 import SongFormatterMixin from './../mixins/SongFormatterMixin'
+var Howl = require('howler').Howl;
+
 
 class AudioPlayer extends Component {
-  mixins: [SongFormatterMixin],
+  mixins: [SongFormatterMixin]
 
-  getDefaultProps = () => {
-    return {songs: [] }
-  },
-
-  getInitialState = () => {
-    return {
-      isPlaying: false,
-      isPause: false,
-      isLoading: false,
-      currentSongIndex: false,
-      volume: 0.5
-    }
-  },
+  state = {
+    isPlaying: false,
+    isPause: false,
+    isLoading: false,
+    currentSongIndex: false,
+    volume: 0.5,
+    songs: []
+  
+  }
 
   ComponentWillMount = () => {
     if (this.props.dataUrl) {
@@ -38,18 +37,17 @@ class AudioPlayer extends Component {
 
         .bind(this)
       })
-      else if (this.props.songs) {
-        this.setState({
-          songs:this.props.songs,
-          currentSongIndex:0
-        })
-      }
-
-      else {
-        throw "no data"
-      }
+    }
+    else if (this.props.songs) {
+      this.setState({
+        songs:this.props.songs,
+        currentSongIndex:0
+      })
     }
 
+    else {
+      throw "no data"
+    }
   }
 
   ComponentDidUpdate = (prevProps, prevState, prevContext) => {
@@ -58,7 +56,8 @@ class AudioPlayer extends Component {
     }
   }
 
-  render = () => {
+  render () {
+    // return <div></div>
     let songCount = this.songCount()
     let percent = 0
     if (this.state.seek && this.state.duration) {
@@ -66,13 +65,15 @@ class AudioPlayer extends Component {
     }
 
     let topComponents = [
+    <div>
       <ButtonPanel isPlaying={this.state.isPlaying} isPause={this.state.isPause}
                    isLoading={this.state.isLoading}
                    currentSongIndex={this.state.currentSongIndex} songCount={songCount}
                    onPlayBtnClick={this.onPlayBtnClick} onPauseBtnClick={this.onPauseBtnClick}
                    onPrevBtnClick={this.onPauseBtnClick} onNextBtnClick={this.onNextBtnClick} />
       <ProgressBar shorter={songCount > 1} percent={percent} seekTo={this.seekTo} /> 
-      <VolumeBar volume={this.state.volume} adjustVolumeTo={this.adjustVolumeTo} />           
+      <VolumeBar volume={this.state.volume} adjustVolumeTo={this.adjustVolumeTo} />
+      </div>         
     ]
 
     let songName
@@ -126,7 +127,7 @@ class AudioPlayer extends Component {
       this.next()
     }
 
-    onSongItemClick = () => {
+    onSongItemClick = (songIndex) => {
       if (this.state.currentSongIndex == songIndex) {
         if (this.state.isPause) {
           this.onPauseBtnClick()
@@ -237,7 +238,7 @@ class AudioPlayer extends Component {
       this.updateSongIndex(this.state.currentSongIndex +1)
     }
 
-    updateSongIndex = () => {
+    updateSongIndex = (index) => {
       this.setState({
         currentSongIndex: index,
         duration: 0
@@ -262,7 +263,7 @@ class AudioPlayer extends Component {
       clearInterval(this.interval)
     }
 
-    seekTo = () => {
+    seekTo = (percent) => {
       let seek = this.state.duration * percent
       this.howler.seek(seek)
       this.setState({
@@ -270,7 +271,7 @@ class AudioPlayer extends Component {
       })
     } 
 
-    adjustVolumeTo = () => {
+    adjustVolumeTo = (percent) => {
       this.setState({
         volume: percent
       })
@@ -290,6 +291,6 @@ class AudioPlayer extends Component {
       }
       let song = this.state.songs[this.state.currentSongIndex]
       return this.getSongName(song)
-    }
-} 
+    } 
 }
+    export default AudioPlayer

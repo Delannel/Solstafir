@@ -1,5 +1,6 @@
-import React from 'react'
-var ProgressBar = require('react-bootstrap/ProgressBar')
+import React, { Component } from 'react'
+import $ from 'jquery'
+// var ProgressBar = require('react-bootstrap/ProgressBar')
 var classnames = require("classnames")
 
 class ProgressBar extends Component {
@@ -10,7 +11,7 @@ class ProgressBar extends Component {
 
   render = () => {
     let percent = this.props.percent * 100
-    let style = {'width: percent' + "%"}
+    let style = {'width': percent +"%"}
     let classes = classnames({
       'audio-progress-container': true,
       'pull-left': true,
@@ -24,7 +25,7 @@ class ProgressBar extends Component {
       )
   }
 
-  seekTo = () => {
+  seekTo = (e) => {
     if(!this.props.percent) {
       return
     }
